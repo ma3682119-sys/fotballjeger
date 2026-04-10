@@ -2,9 +2,8 @@ import Database from "better-sqlite3";
 import path from "path";
 import { CLUBS, TRIALS, MATCHES, CONTACTS, INBOX } from "@/store/data";
 
-const DB_PATH = process.env.NODE_ENV === "production"
-  ? "/data/fotballjeger.db"
-  : path.join(process.cwd(), "fotballjeger.db");
+const DB_PATH = process.env.DB_PATH
+  || (process.env.NODE_ENV === "production" ? "/tmp/fotballjeger.db" : path.join(process.cwd(), "fotballjeger.db"));
 
 let _db = null;
 
