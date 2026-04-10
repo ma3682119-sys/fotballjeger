@@ -1,11 +1,10 @@
-import { Syne, DM_Mono, DM_Sans } from "next/font/google";
+import { DM_Sans, DM_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
 
-const syne = Syne({
-  variable: "--font-display",
+const dmSans = DM_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const dmMono = DM_Mono({
@@ -14,10 +13,11 @@ const dmMono = DM_Mono({
   weight: ["400", "500"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-body",
+const newsreader = Newsreader({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 export const metadata = {
@@ -27,14 +27,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmMono.variable} ${dmSans.variable}`}>
-      <body className="min-h-screen bg-bg text-txt antialiased">
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="flex-1 ml-[220px] p-8 max-w-[1100px]">
-            {children}
-          </main>
-        </div>
+    <html lang="en" className={`${dmSans.variable} ${dmMono.variable} ${newsreader.variable}`}>
+      <body className="h-screen overflow-hidden bg-bg text-txt antialiased font-[family-name:var(--font-sans)]">
+        {children}
       </body>
     </html>
   );
