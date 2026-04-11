@@ -11,8 +11,8 @@ export default function TrialsApp() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-0.5">Trials Radar</h2>
-      <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mb-4 tracking-wide">AUTO-SCANNING · 5 SOURCES</p>
+      <h2 className="text-base font-semibold mb-0.5" style={{ color: "var(--color-text-primary)" }}>Trials Radar</h2>
+      <p className="mb-4 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>AUTO-SCANNING · 5 SOURCES</p>
 
       <StatGrid stats={[
         { val: trials.length, label: "Found" },
@@ -24,8 +24,8 @@ export default function TrialsApp() {
       <SectionLabel>Active sources</SectionLabel>
       <div className="flex gap-1.5 flex-wrap mb-4">
         {SOURCES.map(s => (
-          <div key={s} className="flex items-center gap-1 bg-white/[0.03] px-2 py-0.5 rounded-full border border-border text-[10px] text-txt2 font-[family-name:var(--font-mono)]">
-            <div className="w-1 h-1 rounded-full bg-green" style={{ animation: "pulse-dot 2s infinite" }} />
+          <div key={s} className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px]" style={{ background: "rgba(242,223,203,0.03)", border: "1px solid var(--color-border-primary)", fontFamily: "var(--font-mono)", color: "var(--color-text-secondary)" }}>
+            <div className="w-1 h-1 rounded-full" style={{ background: "var(--color-green)", animation: "pulse-dot 2s infinite" }} />
             {s}
           </div>
         ))}
@@ -36,7 +36,10 @@ export default function TrialsApp() {
         <Card key={t.id}>
           <div className="flex items-center gap-2.5">
             <TrialDate month={t.month} day={t.day} />
-            <div className="flex-1 min-w-0"><div className="text-[13px] font-medium truncate">{t.name}</div><div className="text-[11px] text-txt2 truncate">{t.sub}</div></div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[13px] font-medium truncate" style={{ color: "var(--color-text-primary)" }}>{t.name}</div>
+              <div className="text-[11px] truncate" style={{ color: "var(--color-text-secondary)" }}>{t.sub}</div>
+            </div>
             {t.applied ? <Badge type="green">Applied</Badge> : <Btn variant="green" onClick={() => setTrials(p => p.map(x => x.id === t.id ? { ...x, applied: true } : x))}>Apply</Btn>}
           </div>
         </Card>

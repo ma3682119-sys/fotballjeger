@@ -2,19 +2,19 @@ import { DM_Sans, DM_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 
 const dmSans = DM_Sans({
-  variable: "--font-sans",
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
 const dmMono = DM_Mono({
-  variable: "--font-mono",
+  variable: "--font-dm-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
 
 const newsreader = Newsreader({
-  variable: "--font-display",
+  variable: "--font-newsreader",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
@@ -27,8 +27,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${dmMono.variable} ${newsreader.variable}`}>
-      <body className="h-screen overflow-hidden bg-bg text-txt antialiased font-[family-name:var(--font-sans)]">
+    <html lang="en" data-theme="dark" data-accent="orange" className={`${dmSans.variable} ${dmMono.variable} ${newsreader.variable}`}>
+      <body>
         {children}
       </body>
     </html>

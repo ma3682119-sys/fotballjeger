@@ -1,18 +1,28 @@
 "use client";
 
+/* ── All colors reference the wes-dieleman dark warm palette ── */
+
 const BADGE_STYLES = {
-  green: "bg-green/10 text-green border border-green/15",
-  amber: "bg-amber/10 text-amber border border-amber/15",
-  red: "bg-red/10 text-red border border-red/15",
-  purple: "bg-purple/10 text-purple border border-purple/15",
-  blue: "bg-blue/10 text-blue border border-blue/15",
-  gray: "bg-white/[0.04] text-txt2 border border-border",
-  gold: "bg-gold/10 text-gold border border-gold/15",
+  green: "border border-[var(--color-green)]/15 text-[var(--color-green)]",
+  amber: "border border-[var(--color-amber)]/15 text-[var(--color-amber)]",
+  red: "border border-[var(--color-red)]/15 text-[var(--color-red)]",
+  purple: "border border-[var(--color-purple)]/15 text-[var(--color-purple)]",
+  blue: "border border-[var(--color-blue)]/15 text-[var(--color-blue)]",
+  gray: "border text-[var(--color-text-secondary)]",
+  gold: "border border-[var(--color-gold)]/15 text-[var(--color-gold)]",
 };
 
 export function Badge({ type = "gray", children }) {
   return (
-    <span className={`inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full font-[family-name:var(--font-mono)] tracking-wide ${BADGE_STYLES[type] || BADGE_STYLES.gray}`}>
+    <span
+      className={`inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full tracking-wide ${BADGE_STYLES[type] || BADGE_STYLES.gray}`}
+      style={{
+        fontFamily: "var(--font-mono)",
+        background: type === "gray" ? "rgba(242,223,203,0.04)" : undefined,
+        backgroundColor: type !== "gray" ? `color-mix(in srgb, var(--color-${type === "gold" ? "amber" : type}) 10%, transparent)` : undefined,
+        borderColor: type === "gray" ? "var(--color-border-primary)" : undefined,
+      }}
+    >
       {children}
     </span>
   );
@@ -22,11 +32,20 @@ export function StatGrid({ stats, cols = 4 }) {
   return (
     <div className="grid gap-2 mb-4" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
       {stats.map((s, i) => (
-        <div key={i} className="bg-white/[0.02] border border-border rounded-lg p-3 text-center">
-          <div className="font-semibold text-lg leading-none" style={s.color ? { color: s.color } : {}}>
+        <div key={i} className="text-center" style={{
+          background: "var(--color-bg-secondary)",
+          border: "1px solid var(--color-border-primary)",
+          borderRadius: 10,
+          padding: "12px",
+        }}>
+          <div className="font-semibold text-lg leading-none" style={s.color ? { color: s.color } : { color: "var(--color-text-primary)" }}>
             {s.val}
           </div>
-          <div className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mt-1 tracking-wide uppercase">
+          <div className="mt-1 tracking-wide uppercase" style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 10,
+            color: "var(--color-text-tertiary)",
+          }}>
             {s.label}
           </div>
         </div>
@@ -35,18 +54,25 @@ export function StatGrid({ stats, cols = 4 }) {
   );
 }
 
-const INSIGHT_BORDER = {
-  green: "border-l-green/40",
-  purple: "border-l-purple/40",
-  amber: "border-l-amber/40",
-  gold: "border-l-gold/40",
-  red: "border-l-red/40",
-};
-
 export function Insight({ type = "green", children, className = "" }) {
-  const textColor = type === "gold" ? "text-gold/80" : type === "red" ? "text-red/80" : "text-txt2";
+  const colors = {
+    green: "var(--color-green)",
+    purple: "var(--color-purple)",
+    amber: "var(--color-amber)",
+    gold: "var(--color-gold)",
+    red: "var(--color-red)",
+  };
+  const c = colors[type] || colors.green;
   return (
-    <div className={`text-[12px] ${textColor} rounded-md p-2.5 my-2 leading-relaxed border-l-2 bg-white/[0.02] ${INSIGHT_BORDER[type] || INSIGHT_BORDER.green} ${className}`}>
+    <div className={`my-2 leading-relaxed ${className}`} style={{
+      fontSize: 12,
+      color: type === "gold" || type === "red" ? c : "var(--color-text-secondary)",
+      borderLeft: `2px solid ${c}`,
+      background: "rgba(242,223,203,0.02)",
+      borderRadius: 6,
+      padding: "10px 12px",
+      opacity: type === "gold" || type === "red" ? 0.9 : 0.8,
+    }}>
       {children}
     </div>
   );
@@ -54,9 +80,16 @@ export function Insight({ type = "green", children, className = "" }) {
 
 export function SectionLabel({ children }) {
   return (
-    <div className="font-[family-name:var(--font-mono)] text-[10px] font-medium text-txt3 tracking-widest uppercase mt-5 mb-2 flex items-center gap-2">
+    <div className="flex items-center gap-2 mt-5 mb-2" style={{
+      fontFamily: "var(--font-mono)",
+      fontSize: 10,
+      fontWeight: 500,
+      color: "var(--color-text-tertiary)",
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+    }}>
       {children}
-      <span className="flex-1 h-px bg-border" />
+      <span className="flex-1 h-px" style={{ background: "var(--color-border-primary)" }} />
     </div>
   );
 }
@@ -64,24 +97,36 @@ export function SectionLabel({ children }) {
 export function PageTitle({ children, sub }) {
   return (
     <div className="mb-4">
-      <h1 className="text-lg font-semibold text-txt tracking-tight">{children}</h1>
-      {sub && <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mt-0.5 tracking-wide">{sub}</p>}
+      <h1 className="text-lg font-semibold tracking-tight" style={{ color: "var(--color-text-primary)" }}>{children}</h1>
+      {sub && <p className="mt-0.5 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>{sub}</p>}
     </div>
   );
 }
 
 export function ProgressBar({ value, color = "var(--color-green)", className = "" }) {
   return (
-    <div className={`h-1 bg-white/[0.04] rounded-full my-1 ${className}`}>
-      <div className="h-1 rounded-full transition-all duration-500" style={{ width: `${Math.min(value, 100)}%`, background: color }} />
+    <div className={`my-1 ${className}`} style={{ height: 4, background: "rgba(242,223,203,0.04)", borderRadius: 9999 }}>
+      <div className="transition-all duration-500" style={{ height: 4, width: `${Math.min(value, 100)}%`, background: color, borderRadius: 9999 }} />
     </div>
   );
 }
 
 export function Card({ children, className = "", glow, onClick }) {
-  const glowBorder = glow === "gold" ? "border-gold/15" : glow === "red" ? "border-red/15" : glow === "purple" ? "border-purple/15" : "";
+  const glowBorder = glow === "gold" ? "var(--color-gold)" : glow === "red" ? "var(--color-red)" : glow === "purple" ? "var(--color-purple)" : null;
   return (
-    <div className={`bg-white/[0.02] border border-border rounded-lg p-3.5 mb-2 transition-all hover:border-border2 ${glowBorder} ${className}`} onClick={onClick}>
+    <div
+      className={`mb-2 transition-all ${className}`}
+      style={{
+        background: "var(--color-bg-secondary)",
+        border: `1px solid ${glowBorder ? `color-mix(in srgb, ${glowBorder} 20%, transparent)` : "var(--color-border-primary)"}`,
+        borderRadius: 10,
+        padding: "14px 16px",
+        cursor: onClick ? "pointer" : undefined,
+      }}
+      onClick={onClick}
+      onMouseEnter={e => e.currentTarget.style.borderColor = glowBorder || "var(--color-border-secondary)"}
+      onMouseLeave={e => e.currentTarget.style.borderColor = glowBorder ? `color-mix(in srgb, ${glowBorder} 20%, transparent)` : "var(--color-border-primary)"}
+    >
       {children}
     </div>
   );
@@ -92,14 +137,22 @@ export function GlowDot({ color = "var(--color-green)" }) {
 }
 
 export function Dot({ type = "gray" }) {
-  const colors = { green: "bg-green shadow-[0_0_4px_var(--color-green)]", red: "bg-red", gray: "bg-txt3", amber: "bg-amber" };
-  return <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${colors[type] || colors.gray}`} />;
+  const colors = { green: "var(--color-green)", red: "var(--color-red)", gray: "var(--color-text-tertiary)", amber: "var(--color-amber)" };
+  return <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: colors[type] || colors.gray }} />;
 }
 
 export function Avatar({ initials, color = "green", size = 32 }) {
-  const colors = { green: "bg-green/10 text-green", purple: "bg-purple/10 text-purple", amber: "bg-amber/10 text-amber", blue: "bg-blue/10 text-blue", red: "bg-red/10 text-red", gold: "bg-gold/10 text-gold" };
+  const colors = {
+    green: { bg: "var(--color-green-dim)", text: "var(--color-green)" },
+    purple: { bg: "var(--color-purple-dim)", text: "var(--color-purple)" },
+    amber: { bg: "var(--color-amber-dim)", text: "var(--color-amber)" },
+    blue: { bg: "var(--color-blue-dim)", text: "var(--color-blue)" },
+    red: { bg: "var(--color-red-dim)", text: "var(--color-red)" },
+    gold: { bg: "var(--color-gold-dim)", text: "var(--color-gold)" },
+  };
+  const c = colors[color] || colors.green;
   return (
-    <div className={`rounded-full flex items-center justify-center font-semibold shrink-0 ${colors[color] || colors.green}`} style={{ width: size, height: size, fontSize: size * 0.35 }}>
+    <div className="rounded-full flex items-center justify-center font-semibold shrink-0" style={{ width: size, height: size, fontSize: size * 0.35, background: c.bg, color: c.text }}>
       {initials}
     </div>
   );
@@ -110,7 +163,7 @@ export function MiniChart({ data, colors, height = 32 }) {
   return (
     <div className="flex items-end gap-px" style={{ height }}>
       {data.map((v, i) => (
-        <div key={i} className="flex-1 rounded-t-sm min-h-[2px] transition-all duration-300" style={{ height: `${(v / max) * 100}%`, background: colors?.[i] || "var(--color-green)" }} />
+        <div key={i} className="flex-1 rounded-t-sm min-h-[2px] transition-all duration-300" style={{ height: `${(v / max) * 100}%`, background: colors?.[i] || "var(--color-accent)" }} />
       ))}
     </div>
   );
@@ -119,7 +172,11 @@ export function MiniChart({ data, colors, height = 32 }) {
 export function TagRow({ tags }) {
   return (
     <div className="flex gap-1 flex-wrap my-1">
-      {tags.map(t => <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-txt3 font-[family-name:var(--font-mono)]">{t}</span>)}
+      {tags.map(t => (
+        <span key={t} style={{ fontFamily: "var(--font-mono)", fontSize: 10, padding: "2px 6px", borderRadius: 4, background: "rgba(242,223,203,0.04)", color: "var(--color-text-tertiary)" }}>
+          {t}
+        </span>
+      ))}
     </div>
   );
 }
@@ -130,12 +187,12 @@ export function StepRow({ steps }) {
       <div key={i} className="flex gap-2 py-1">
         <div className="flex flex-col items-center">
           <div className="w-1.5 h-1.5 rounded-full mt-1.5" style={{ background: s.color }} />
-          {i < steps.length - 1 && <div className="w-px flex-1 bg-border mx-[3px] min-h-[14px]" />}
+          {i < steps.length - 1 && <div className="w-px flex-1 mx-[3px] min-h-[14px]" style={{ background: "var(--color-border-primary)" }} />}
         </div>
         <div>
-          <div className="text-[12px] font-medium text-txt">{s.title}</div>
-          <div className="text-[11px] text-txt2">{s.sub}</div>
-          <span className="font-[family-name:var(--font-mono)] text-[9px] bg-amber/10 text-amber px-1.5 py-px rounded mt-0.5 inline-block">{s.deadline}</span>
+          <div className="text-[12px] font-medium" style={{ color: "var(--color-text-primary)" }}>{s.title}</div>
+          <div className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>{s.sub}</div>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, background: "var(--color-amber-dim)", color: "var(--color-amber)", padding: "1px 6px", borderRadius: 4, marginTop: 2, display: "inline-block" }}>{s.deadline}</span>
         </div>
       </div>
     ))}</div>
@@ -144,7 +201,10 @@ export function StepRow({ steps }) {
 
 export function TrialDate({ month, day }) {
   return (
-    <div className="text-[11px] font-semibold text-blue bg-blue/10 px-2 py-1 rounded-md text-center min-w-[40px] leading-tight shrink-0 border border-blue/10">
+    <div className="text-center shrink-0" style={{
+      fontSize: 11, fontWeight: 600, color: "var(--color-blue)", background: "var(--color-blue-dim)",
+      padding: "4px 8px", borderRadius: 8, minWidth: 40, lineHeight: 1.3, border: "1px solid rgba(90,143,224,0.1)",
+    }}>
       {month}<br />{day}
     </div>
   );
@@ -152,16 +212,19 @@ export function TrialDate({ month, day }) {
 
 export function CoachAlertPill({ name, weeksAgo }) {
   return (
-    <div className="font-[family-name:var(--font-mono)] text-[10px] text-red bg-red/8 px-2 py-1 rounded-md mb-1.5 flex items-center gap-1.5 border border-red/10">
-      <div className="w-1 h-1 rounded-full bg-red shrink-0" style={{ animation: "pulse-dot 2s infinite" }} />
+    <div className="flex items-center gap-1.5 mb-1.5" style={{
+      fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-red)", background: "var(--color-red-dim)",
+      padding: "4px 8px", borderRadius: 6, border: "1px solid rgba(212,90,90,0.1)",
+    }}>
+      <div className="w-1 h-1 rounded-full shrink-0" style={{ background: "var(--color-red)", animation: "pulse-dot 2s infinite" }} />
       New coach: {name} · {weeksAgo}w ago
     </div>
   );
 }
 
 export function RatingDisplay({ value }) {
-  const color = value >= 8 ? "text-green" : value >= 7 ? "text-amber" : "text-red";
-  return <div className={`font-semibold text-lg ${color}`}>{value.toFixed(1)}</div>;
+  const c = value >= 8 ? "var(--color-green)" : value >= 7 ? "var(--color-amber)" : "var(--color-red)";
+  return <div className="font-semibold text-lg" style={{ color: c }}>{value.toFixed(1)}</div>;
 }
 
 export function ResultBadge({ result }) {
@@ -171,28 +234,38 @@ export function ResultBadge({ result }) {
 export function PercentileBlock({ label, val, text }) {
   return (
     <div className="mb-2">
-      <div className="flex justify-between text-[12px] text-txt2 mb-0.5">
+      <div className="flex justify-between mb-0.5" style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>
         <span>{label}</span>
-        <span className="font-[family-name:var(--font-mono)] font-medium text-txt text-[11px]">{text}</span>
+        <span style={{ fontFamily: "var(--font-mono)", fontWeight: 500, color: "var(--color-text-primary)", fontSize: 11 }}>{text}</span>
       </div>
-      <div className="h-1 bg-white/[0.04] rounded-full">
-        <div className="h-1 rounded-full bg-green transition-all duration-500" style={{ width: `${val}%` }} />
-      </div>
+      <ProgressBar value={val} />
     </div>
   );
 }
 
 export function Btn({ children, variant = "default", onClick, disabled, className = "" }) {
   const styles = {
-    green: "bg-green/10 text-green border-green/15 hover:bg-green/15",
-    purple: "bg-purple/10 text-purple border-purple/15 hover:bg-purple/15",
-    red: "border-red/15 text-red hover:bg-red/10",
-    gold: "border-gold/15 text-gold hover:bg-gold/10",
-    default: "border-border2 text-txt2 hover:bg-white/[0.04] hover:text-txt",
+    green: { bg: "var(--color-green-dim)", color: "var(--color-green)", border: "rgba(76,163,103,0.15)" },
+    purple: { bg: "var(--color-purple-dim)", color: "var(--color-purple)", border: "rgba(159,113,223,0.15)" },
+    red: { bg: "transparent", color: "var(--color-red)", border: "rgba(212,90,90,0.15)" },
+    gold: { bg: "transparent", color: "var(--color-gold)", border: "rgba(224,168,64,0.15)" },
+    default: { bg: "transparent", color: "var(--color-text-secondary)", border: "var(--color-border-secondary)" },
   };
+  const s = styles[variant] || styles.default;
   return (
     <button
-      className={`text-[11px] px-2.5 py-1 rounded-md border transition-all font-[family-name:var(--font-mono)] tracking-wide disabled:opacity-40 ${styles[variant] || styles.default} ${className}`}
+      className={`transition-all disabled:opacity-40 ${className}`}
+      style={{
+        fontFamily: "var(--font-mono)",
+        fontSize: 11,
+        padding: "4px 10px",
+        borderRadius: 6,
+        border: `1px solid ${s.border}`,
+        background: s.bg,
+        color: s.color,
+        letterSpacing: "0.02em",
+        cursor: disabled ? "default" : "pointer",
+      }}
       onClick={onClick}
       disabled={disabled}
     >

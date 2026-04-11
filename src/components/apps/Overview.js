@@ -26,13 +26,13 @@ export default function OverviewApp() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-0.5">Good evening —</h2>
-      <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mb-4 tracking-wide">ALL SYSTEMS ONLINE · 5 SOURCES ACTIVE</p>
+      <h2 className="text-base font-semibold mb-0.5" style={{ color: "var(--color-text-primary)" }}>Good evening —</h2>
+      <p className="mb-4 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>ALL SYSTEMS ONLINE · 5 SOURCES ACTIVE</p>
 
       <StatGrid stats={[
         { val: interested, label: "Interested", color: "var(--color-green)" },
         { val: INBOX.length, label: "Emails sent" },
-        { val: `${TRIALS.length}`, label: "Trials found", color: "var(--color-purple)" },
+        { val: `${TRIALS.length}`, label: "Trials found", color: "var(--color-accent)" },
         { val: stats?.avgRating ?? "—", label: "Avg rating" },
       ]} />
 
@@ -41,20 +41,29 @@ export default function OverviewApp() {
       <SectionLabel>This week</SectionLabel>
       <Card>
         <div className="flex items-center justify-between">
-          <div><div className="text-[13px] font-medium">Trial — Lyn FK G17</div><div className="text-[11px] text-txt2">Mon Apr 14 · Bislett · 4.3km</div></div>
+          <div>
+            <div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>Trial — Lyn FK G17</div>
+            <div className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Mon Apr 14 · Bislett · 4.3km</div>
+          </div>
           <Badge type="green">Confirmed</Badge>
         </div>
       </Card>
       <Card>
         <div className="flex items-center justify-between">
-          <div><div className="text-[13px] font-medium">Follow up — Grei FK</div><div className="text-[11px] text-txt2">No reply in 10 days</div></div>
+          <div>
+            <div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>Follow up — Grei FK</div>
+            <div className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>No reply in 10 days</div>
+          </div>
           <Btn variant="green">Send follow-up</Btn>
         </div>
       </Card>
       {pending > 0 && (
         <Card>
           <div className="flex items-center justify-between">
-            <div><div className="text-[13px] font-medium">{pending} trials pending</div><div className="text-[11px] text-txt2">Skeid, Frigg, Kjelsås...</div></div>
+            <div>
+              <div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>{pending} trials pending</div>
+              <div className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Skeid, Frigg, Kjelsås...</div>
+            </div>
             <Btn variant="purple">Review all</Btn>
           </div>
         </Card>
@@ -64,8 +73,8 @@ export default function OverviewApp() {
         <SectionLabel>Top pathway</SectionLabel>
         <Card glow="gold">
           <div className="flex items-start justify-between mb-1">
-            <div><Badge type="gold">Goldmine #1</Badge><div className="text-[13px] font-medium mt-1">{topPath.title}</div></div>
-            <div className="text-right shrink-0"><div className="text-xl font-bold text-gold glow-gold">{topPath.successRate}%</div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3">success rate</div></div>
+            <div><Badge type="gold">Goldmine #1</Badge><div className="text-[13px] font-medium mt-1" style={{ color: "var(--color-text-primary)" }}>{topPath.title}</div></div>
+            <div className="text-right shrink-0"><div className="text-xl font-bold glow-gold" style={{ color: "var(--color-gold)" }}>{topPath.successRate}%</div><div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>success rate</div></div>
           </div>
           <Insight type="gold">{topPath.insight}</Insight>
         </Card>
@@ -75,7 +84,10 @@ export default function OverviewApp() {
       <Card>
         <div className="flex items-center gap-2.5">
           <GlowDot color="var(--color-green)" />
-          <div className="flex-1"><div className="text-[13px] font-medium">Somalia — fully eligible</div><div className="text-[11px] text-txt2">Zero competitive caps for Norway.</div></div>
+          <div className="flex-1">
+            <div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>Somalia — fully eligible</div>
+            <div className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Zero competitive caps for Norway.</div>
+          </div>
           <Badge type="green">Protected</Badge>
         </div>
       </Card>
@@ -88,9 +100,9 @@ export default function OverviewApp() {
             { val: `${stats.wins}W ${stats.draws}D ${stats.losses}L`, label: "Record" },
             { val: stats.trend === "up" ? "↑ Rising" : "→ Stable", label: "Form", color: stats.trend === "up" ? "var(--color-green)" : undefined },
           ].map((s, i) => (
-            <div key={i} className="bg-white/[0.02] border border-border rounded-lg p-2.5 text-center">
-              <div className="font-semibold text-sm" style={s.color ? { color: s.color } : {}}>{s.val}</div>
-              <div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mt-0.5">{s.label}</div>
+            <div key={i} className="text-center" style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border-primary)", borderRadius: 10, padding: "10px" }}>
+              <div className="font-semibold text-sm" style={s.color ? { color: s.color } : { color: "var(--color-text-primary)" }}>{s.val}</div>
+              <div className="mt-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>{s.label}</div>
             </div>
           ))}
         </div>

@@ -38,35 +38,35 @@ export default function MatchesApp() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-0.5">Match Logger</h2>
-      <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mb-4 tracking-wide">{matches.length} MATCHES LOGGED</p>
+      <h2 className="text-base font-semibold mb-0.5" style={{ color: "var(--color-text-primary)" }}>Match Logger</h2>
+      <p className="mb-4 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>{matches.length} MATCHES LOGGED</p>
 
       {stats && <StatGrid stats={[{ val: stats.count, label: "Matches" }, { val: stats.totalMins, label: "Minutes" }, { val: stats.totalGoals, label: "Goals" }, { val: stats.avg, label: "Avg rating" }]} />}
-      {stats && <Insight type="purple">Best position: {stats.bestPos} (avg {stats.pb[0]?.avg}). Form: {stats.trend === "up" ? "↑ rising" : "→ stable"}. Lead with {stats.bestPos} in emails.</Insight>}
+      {stats && <Insight type="purple">Best position: {stats.bestPos} (avg {stats.pb[0]?.avg}). Form: {stats.trend === "up" ? "rising" : "stable"}. Lead with {stats.bestPos} in emails.</Insight>}
       {stats && <><SectionLabel>Rating trend</SectionLabel><div className="mb-3"><MiniChart data={stats.rh} colors={stats.rc} height={36} /></div></>}
 
       {stats?.pb.length > 1 && <><SectionLabel>By position</SectionLabel><div className="grid grid-cols-3 gap-1.5 mb-3">{stats.pb.map(p => (
-        <div key={p.pos} className="bg-white/[0.02] border border-border rounded-md p-2 text-center">
-          <div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3">{p.pos}</div>
-          <div className="font-semibold text-base">{p.avg}</div>
-          <div className="text-[10px] text-txt3">{p.c}g · {p.g}G {p.a}A</div>
+        <div key={p.pos} className="text-center" style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border-primary)", borderRadius: 8, padding: 8 }}>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>{p.pos}</div>
+          <div className="font-semibold text-base" style={{ color: "var(--color-text-primary)" }}>{p.avg}</div>
+          <div style={{ fontSize: 10, color: "var(--color-text-tertiary)" }}>{p.c}g · {p.g}G {p.a}A</div>
         </div>
       ))}</div></>}
 
       <SectionLabel>Log new match</SectionLabel>
       <Card>
         <div className="grid grid-cols-2 gap-2 mb-2">
-          <div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mb-0.5">OPPONENT</div><input type="text" placeholder="Club name" value={form.opp} onChange={e => set("opp", e.target.value)} className="w-full" /></div>
-          <div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mb-0.5">POSITION</div><select value={form.pos} onChange={e => set("pos", e.target.value)} className="w-full">{POS.map(p => <option key={p}>{p}</option>)}</select></div>
-          <div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mb-0.5">RESULT</div><select value={form.result} onChange={e => set("result", e.target.value)} className="w-full">{RES.map(r => <option key={r}>{r}</option>)}</select></div>
-          <div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mb-0.5">MINUTES</div><input type="number" value={form.mins} onChange={e => set("mins", e.target.value)} className="w-full" /></div>
-          <div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mb-0.5">GOALS</div><input type="number" value={form.goals} onChange={e => set("goals", e.target.value)} className="w-full" /></div>
-          <div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mb-0.5">ASSISTS</div><input type="number" value={form.assists} onChange={e => set("assists", e.target.value)} className="w-full" /></div>
+          <div><div className="mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>OPPONENT</div><input type="text" placeholder="Club name" value={form.opp} onChange={e => set("opp", e.target.value)} className="w-full" /></div>
+          <div><div className="mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>POSITION</div><select value={form.pos} onChange={e => set("pos", e.target.value)} className="w-full">{POS.map(p => <option key={p}>{p}</option>)}</select></div>
+          <div><div className="mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>RESULT</div><select value={form.result} onChange={e => set("result", e.target.value)} className="w-full">{RES.map(r => <option key={r}>{r}</option>)}</select></div>
+          <div><div className="mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>MINUTES</div><input type="number" value={form.mins} onChange={e => set("mins", e.target.value)} className="w-full" /></div>
+          <div><div className="mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>GOALS</div><input type="number" value={form.goals} onChange={e => set("goals", e.target.value)} className="w-full" /></div>
+          <div><div className="mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>ASSISTS</div><input type="number" value={form.assists} onChange={e => set("assists", e.target.value)} className="w-full" /></div>
         </div>
         <div className="flex items-center gap-2 mb-2">
-          <span className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 w-10">Rating</span>
-          <input type="range" min={1} max={10} step={1} value={form.rating} onChange={e => set("rating", +e.target.value)} className="flex-1" style={{ accentColor: "var(--color-green)" }} />
-          <span className="font-semibold text-lg w-7 text-right">{form.rating}</span>
+          <span className="w-10" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>Rating</span>
+          <input type="range" min={1} max={10} step={1} value={form.rating} onChange={e => set("rating", +e.target.value)} className="flex-1" style={{ accentColor: "var(--color-accent)" }} />
+          <span className="font-semibold text-lg w-7 text-right" style={{ color: "var(--color-text-primary)" }}>{form.rating}</span>
         </div>
         <Btn variant="green" onClick={log}>Log match</Btn>
       </Card>
@@ -75,7 +75,10 @@ export default function MatchesApp() {
       {matches.map(m => (
         <Card key={m.id}>
           <div className="flex items-center justify-between">
-            <div><div className="text-[12px] font-medium">{m.opp}</div><div className="text-[10px] text-txt3 font-[family-name:var(--font-mono)]">{m.date} · {m.pos} · {m.mins}min · {m.goals}G {m.assists}A</div></div>
+            <div>
+              <div className="text-[12px] font-medium" style={{ color: "var(--color-text-primary)" }}>{m.opp}</div>
+              <div className="text-[10px]" style={{ fontFamily: "var(--font-mono)", color: "var(--color-text-tertiary)" }}>{m.date} · {m.pos} · {m.mins}min · {m.goals}G {m.assists}A</div>
+            </div>
             <div className="flex items-center gap-2 shrink-0"><ResultBadge result={m.result} /><RatingDisplay value={m.rating} /></div>
           </div>
         </Card>

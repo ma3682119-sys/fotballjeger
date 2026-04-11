@@ -25,8 +25,8 @@ export default function PathwayApp() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-0.5">Pathway Simulation</h2>
-      <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mb-4 tracking-wide">MONTE CARLO ENGINE</p>
+      <h2 className="text-base font-semibold mb-0.5" style={{ color: "var(--color-text-primary)" }}>Pathway Simulation</h2>
+      <p className="mb-4 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>MONTE CARLO ENGINE</p>
 
       <StatGrid stats={[
         { val: `${PATHWAYS.find(p => p.rank === 1)?.successRate ?? 0}%`, label: "Top path", color: "var(--color-green)" },
@@ -35,21 +35,21 @@ export default function PathwayApp() {
         { val: "Aug 26", label: "Deadline" },
       ]} />
 
-      <Card className="!bg-white/[0.02] mb-3">
-        <div className="text-[13px] font-medium mb-2">Simulation target</div>
-        <div className="flex items-center gap-2 flex-wrap mb-2 text-[12px] text-txt2">
+      <Card className="mb-3" style={{ background: "rgba(242,223,203,0.02)" }}>
+        <div className="text-[13px] font-medium mb-2" style={{ color: "var(--color-text-primary)" }}>Simulation target</div>
+        <div className="flex items-center gap-2 flex-wrap mb-2 text-[12px]" style={{ color: "var(--color-text-secondary)" }}>
           <span>Senior football by age</span>
           <select value={targetAge} onChange={e => setTargetAge(+e.target.value)} className="text-[12px] py-1 px-2">{[17, 18, 19].map(a => <option key={a} value={a}>{a}</option>)}</select>
         </div>
         <Btn variant="purple" onClick={runSim} disabled={simRunning}>{simRunning ? `Simulating... ${simCount.toLocaleString()}` : "Run simulation — 700k+ paths"}</Btn>
-        {!simRunning && simCount >= 147000 && <div className="font-[family-name:var(--font-mono)] text-[10px] text-green mt-1.5">✓ {simCount.toLocaleString()} paths · {goldmines.length} goldmines</div>}
+        {!simRunning && simCount >= 147000 && <div className="mt-1.5" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-green)" }}>{simCount.toLocaleString()} paths · {goldmines.length} goldmines</div>}
       </Card>
 
       {simResults && <><SectionLabel>Live results</SectionLabel>{simResults.paths?.slice(0, 5).map((p, i) => (
         <Card key={p.clubId} glow={i === 0 ? "gold" : i === 1 ? "purple" : undefined}>
           <div className="flex items-start justify-between mb-1">
-            <div><Badge type={i === 0 ? "gold" : i === 1 ? "purple" : i < 3 ? "gray" : "red"}>#{p.rank}</Badge><div className="text-[13px] font-medium mt-0.5">{p.clubName}</div></div>
-            <div className="text-right"><div className={`font-semibold text-lg ${p.successRate > 20 ? "text-green" : p.successRate > 10 ? "text-amber" : "text-red"}`}>{p.successRate}%</div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3">{p.simCount.toLocaleString()} sims</div></div>
+            <div><Badge type={i === 0 ? "gold" : i === 1 ? "purple" : i < 3 ? "gray" : "red"}>#{p.rank}</Badge><div className="text-[13px] font-medium mt-0.5" style={{ color: "var(--color-text-primary)" }}>{p.clubName}</div></div>
+            <div className="text-right"><div className="font-semibold text-lg" style={{ color: p.successRate > 20 ? "var(--color-green)" : p.successRate > 10 ? "var(--color-amber)" : "var(--color-red)" }}>{p.successRate}%</div><div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>{p.simCount.toLocaleString()} sims</div></div>
           </div>
           <ProgressBar value={p.successRate} color={p.successRate > 20 ? "var(--color-green)" : "var(--color-amber)"} />
         </Card>
@@ -59,8 +59,8 @@ export default function PathwayApp() {
       {goldmines.map(p => (
         <Card key={p.id} glow={p.type === "gold" ? "gold" : p.type === "purple" ? "purple" : undefined} className="mb-2">
           <div className="flex items-start justify-between mb-1">
-            <div><div className="flex gap-1 mb-1"><Badge type={p.badgeType}>{p.badge}</Badge>{p.tag && <Badge type={p.tagType}>{p.tag}</Badge>}</div><div className="text-[13px] font-medium">{p.title}</div></div>
-            <div className="text-right shrink-0"><div className={`font-semibold text-xl ${p.type === "gold" ? "text-gold glow-gold" : ""}`}>{p.successRate}%</div><div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3">success</div></div>
+            <div><div className="flex gap-1 mb-1"><Badge type={p.badgeType}>{p.badge}</Badge>{p.tag && <Badge type={p.tagType}>{p.tag}</Badge>}</div><div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>{p.title}</div></div>
+            <div className="text-right shrink-0"><div className={`font-semibold text-xl ${p.type === "gold" ? "glow-gold" : ""}`} style={{ color: p.type === "gold" ? "var(--color-gold)" : "var(--color-text-primary)" }}>{p.successRate}%</div><div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>success</div></div>
           </div>
           <ProgressBar value={p.successRate} color={p.barColor} className="mb-1.5" />
           <Insight type={p.type === "gold" ? "gold" : p.type === "gray" ? "green" : "purple"}>{p.insight}</Insight>
@@ -71,7 +71,7 @@ export default function PathwayApp() {
 
       <SectionLabel>Avoid</SectionLabel>
       {dead.map(p => (
-        <Card key={p.id} glow="red"><div className="text-[13px] font-medium mb-1">{p.title}</div><Insight type="red">{p.insight}</Insight></Card>
+        <Card key={p.id} glow="red"><div className="text-[13px] font-medium mb-1" style={{ color: "var(--color-text-primary)" }}>{p.title}</div><Insight type="red">{p.insight}</Insight></Card>
       ))}
     </div>
   );

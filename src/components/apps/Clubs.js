@@ -12,8 +12,8 @@ export default function ClubsApp() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-0.5">Club Scouting</h2>
-      <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mb-4 tracking-wide">SCANNING {clubs.length} CLUBS · OSLO REGION</p>
+      <h2 className="text-base font-semibold mb-0.5" style={{ color: "var(--color-text-primary)" }}>Club Scouting</h2>
+      <p className="mb-4 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>SCANNING {clubs.length} CLUBS · OSLO REGION</p>
 
       <StatGrid stats={[
         { val: clubs.length, label: "Scanned" },
@@ -28,27 +28,27 @@ export default function ClubsApp() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-2">
-        {filtered.map(club => (
-          <Card key={club.id} glow={club.goldmine ? "gold" : club.avoid ? "red" : undefined}>
-            <div className="flex items-start justify-between mb-1">
-              <div><div className="text-[13px] font-medium">{club.name}</div><div className="text-[11px] text-txt3 font-[family-name:var(--font-mono)]">{club.distance}km</div></div>
-              <Badge type={club.badgeType}>{club.badge}</Badge>
+      {filtered.map(club => (
+        <Card key={club.id} glow={club.goldmine ? "gold" : club.avoid ? "red" : undefined}>
+          <div className="flex items-start justify-between mb-1">
+            <div>
+              <div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>{club.name}</div>
+              <div className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--color-text-tertiary)" }}>{club.distance}km</div>
             </div>
-            {club.coachAlert && <CoachAlertPill name={club.coachAlert.name} weeksAgo={club.coachAlert.weeksAgo} />}
-            <TagRow tags={club.tags} />
-            <div className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 mt-1.5 mb-0.5">PATH SCORE</div>
-            <ProgressBar value={club.pathScore} color={club.pathScore >= 70 ? "var(--color-green)" : club.pathScore >= 50 ? "var(--color-amber)" : "var(--color-red)"} />
-            <div className="font-semibold text-lg mb-1">{club.pathScore}</div>
-            <Insight type={club.goldmine ? "gold" : club.avoid ? "red" : "green"}>{club.insight}</Insight>
-            <div className="flex gap-1 mt-2">
-              {!club.avoid && <Btn variant="green">Send email</Btn>}
-              <Btn>View</Btn>
-              <Btn variant="red">Skip</Btn>
-            </div>
-          </Card>
-        ))}
-      </div>
+            <Badge type={club.badgeType}>{club.badge}</Badge>
+          </div>
+          {club.coachAlert && <CoachAlertPill name={club.coachAlert.name} weeksAgo={club.coachAlert.weeksAgo} />}
+          <TagRow tags={club.tags} />
+          <div className="mt-1.5 mb-0.5" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>PATH SCORE</div>
+          <ProgressBar value={club.pathScore} color={club.pathScore >= 70 ? "var(--color-green)" : club.pathScore >= 50 ? "var(--color-amber)" : "var(--color-red)"} />
+          <div className="font-semibold text-lg mb-1" style={{ color: "var(--color-text-primary)" }}>{club.pathScore}</div>
+          <Insight type={club.goldmine ? "gold" : club.avoid ? "red" : "green"}>{club.insight}</Insight>
+          <div className="flex gap-1 mt-2">
+            {!club.avoid && <Btn variant="green">Send email</Btn>}
+            <Btn>View</Btn>
+          </div>
+        </Card>
+      ))}
     </div>
   );
 }

@@ -20,8 +20,8 @@ export default function InboxApp() {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-0.5">Inbox</h2>
-      <p className="font-[family-name:var(--font-mono)] text-[10px] text-txt3 mb-4 tracking-wide">{gmailAuth?.authenticated ? "GMAIL CONNECTED" : "DEMO MODE"}</p>
+      <h2 className="text-base font-semibold mb-0.5" style={{ color: "var(--color-text-primary)" }}>Inbox</h2>
+      <p className="mb-4 tracking-wide" style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>{gmailAuth?.authenticated ? "GMAIL CONNECTED" : "DEMO MODE"}</p>
 
       <StatGrid stats={[
         { val: interested, label: "Interested", color: "var(--color-green)" },
@@ -33,8 +33,11 @@ export default function InboxApp() {
       {!gmailAuth?.authenticated && gmailAuth?.authUrl && (
         <Card glow="purple" className="mb-3">
           <div className="flex items-center justify-between">
-            <div><div className="text-[13px] font-medium">Connect Gmail</div><div className="text-[11px] text-txt2">Live email data</div></div>
-            <a href={gmailAuth.authUrl} className="text-[11px] px-2.5 py-1 rounded-md bg-purple/10 text-purple border border-purple/15 no-underline font-[family-name:var(--font-mono)]">Connect</a>
+            <div>
+              <div className="text-[13px] font-medium" style={{ color: "var(--color-text-primary)" }}>Connect Gmail</div>
+              <div className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Live email data</div>
+            </div>
+            <a href={gmailAuth.authUrl} style={{ fontFamily: "var(--font-mono)", fontSize: 11, padding: "4px 10px", borderRadius: 6, background: "var(--color-purple-dim)", color: "var(--color-purple)", border: "1px solid rgba(159,113,223,0.15)", textDecoration: "none" }}>Connect</a>
           </div>
         </Card>
       )}
@@ -43,9 +46,13 @@ export default function InboxApp() {
         <SectionLabel>Gmail — live</SectionLabel>
         <Card className="mb-3">
           {gmailInbox.map(msg => (
-            <div key={msg.id} className="flex items-center gap-2 py-2 border-b border-border last:border-0">
-              <Dot type="green" /><div className="flex-1 min-w-0"><div className="text-[12px] font-medium truncate">{msg.subject}</div><div className="text-[10px] text-txt3 truncate">{msg.from}</div></div>
-              <span className="font-[family-name:var(--font-mono)] text-[10px] text-txt3">{msg.date}</span>
+            <div key={msg.id} className="flex items-center gap-2 py-2 last:border-0" style={{ borderBottom: "1px solid var(--color-border-primary)" }}>
+              <Dot type="green" />
+              <div className="flex-1 min-w-0">
+                <div className="text-[12px] font-medium truncate" style={{ color: "var(--color-text-primary)" }}>{msg.subject}</div>
+                <div className="text-[10px] truncate" style={{ color: "var(--color-text-tertiary)" }}>{msg.from}</div>
+              </div>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-text-tertiary)" }}>{msg.date}</span>
             </div>
           ))}
         </Card>
@@ -55,16 +62,23 @@ export default function InboxApp() {
       <Card>
         {inbox.map(item => (
           <div key={item.id}>
-            <div className="flex items-center gap-2 py-2 border-b border-border cursor-pointer hover:bg-white/[0.01] -mx-3.5 px-3.5 transition-colors" onClick={() => setOpen(open === item.id ? null : item.id)}>
+            <div className="flex items-center gap-2 py-2 cursor-pointer transition-colors" style={{ borderBottom: "1px solid var(--color-border-primary)", margin: "0 -16px", padding: "8px 16px" }}
+              onClick={() => setOpen(open === item.id ? null : item.id)}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(242,223,203,0.02)"}
+              onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+            >
               <Dot type={item.status} />
-              <div className="flex-1 min-w-0"><div className="text-[12px] font-medium">{item.club}</div><div className="text-[10px] text-txt3 truncate">{item.preview}</div></div>
-              <span className="font-[family-name:var(--font-mono)] text-[9px] text-txt3 shrink-0">{item.date}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[12px] font-medium" style={{ color: "var(--color-text-primary)" }}>{item.club}</div>
+                <div className="text-[10px] truncate" style={{ color: "var(--color-text-tertiary)" }}>{item.preview}</div>
+              </div>
+              <span className="shrink-0" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--color-text-tertiary)" }}>{item.date}</span>
               {item.status === "green" && <Btn variant="green" onClick={e => { e.stopPropagation(); setOpen(item.id); }}>Reply</Btn>}
               {item.status === "gray" && <Btn onClick={e => e.stopPropagation()}>Follow up</Btn>}
             </div>
             {open === item.id && (
-              <div className="py-2 border-b border-border">
-                {item.full && <div className="text-[12px] text-txt2 bg-white/[0.02] p-2.5 rounded-md mb-2 italic border-l-2 border-green/20">&ldquo;{item.full}&rdquo;</div>}
+              <div className="py-2" style={{ borderBottom: "1px solid var(--color-border-primary)" }}>
+                {item.full && <div className="text-[12px] italic mb-2" style={{ color: "var(--color-text-secondary)", background: "rgba(242,223,203,0.02)", padding: 10, borderRadius: 6, borderLeft: "2px solid var(--color-green)" }}>&ldquo;{item.full}&rdquo;</div>}
                 {item.status === "green" && (
                   <div>
                     <textarea value={reply} onChange={e => setReply(e.target.value)} placeholder="Type reply..." className="w-full min-h-[60px] mb-2 text-[12px]" />
