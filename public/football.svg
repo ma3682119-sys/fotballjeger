@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <!-- Shadow -->
+  <ellipse cx="290" cy="474" rx="148" ry="17" fill="rgba(0,0,0,0.22)"/>
+  <!-- Glow aura -->
+  <circle cx="268" cy="258" r="188" fill="rgba(255,255,255,0.05)"/>
+  <!-- Motion lines -->
+  <line x1="4" y1="196" x2="80" y2="196" stroke="rgba(255,255,255,0.28)" stroke-width="9" stroke-linecap="round"/>
+  <line x1="0" y1="230" x2="60" y2="230" stroke="rgba(255,255,255,0.20)" stroke-width="7" stroke-linecap="round"/>
+  <line x1="6" y1="264" x2="64" y2="264" stroke="rgba(255,255,255,0.15)" stroke-width="5" stroke-linecap="round"/>
+  <line x1="10" y1="294" x2="62" y2="294" stroke="rgba(255,255,255,0.10)" stroke-width="4" stroke-linecap="round"/>
+  <!-- Ball outline -->
+  <circle cx="268" cy="258" r="185" fill="none" stroke="rgba(255,255,255,0.88)" stroke-width="11"/>
+  <!-- Top center pentagon -->
+  <polygon points="268,78 320,114 300,172 236,172 216,114" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.72)" stroke-width="7" stroke-linejoin="round"/>
+  <!-- Seam lines from pentagon vertices to ball edge -->
+  <path d="M 320,114 Q 398,146 446,213" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 446,213 Q 456,256 436,306" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 300,172 Q 352,266 336,396" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 436,306 Q 406,366 336,396" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 336,396 Q 268,446 200,396" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 236,172 Q 184,266 200,396" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 216,114 Q 138,146 92,213" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 92,213 Q 80,256 100,306" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 100,306 Q 130,366 200,396" fill="none" stroke="rgba(255,255,255,0.62)" stroke-width="7" stroke-linecap="round"/>
+  <!-- Sparkle top-right -->
+  <line x1="418" y1="84" x2="418" y2="102" stroke="rgba(255,255,255,0.65)" stroke-width="3.2" stroke-linecap="round"/>
+  <line x1="409" y1="93" x2="427" y2="93" stroke="rgba(255,255,255,0.65)" stroke-width="3.2" stroke-linecap="round"/>
+  <line x1="411" y1="86" x2="425" y2="100" stroke="rgba(255,255,255,0.38)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="425" y1="86" x2="411" y2="100" stroke="rgba(255,255,255,0.38)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Small sparkle dots -->
+  <circle cx="450" cy="110" r="3.5" fill="rgba(255,255,255,0.52)"/>
+  <circle cx="466" cy="86" r="2.4" fill="rgba(255,255,255,0.38)"/>
+  <circle cx="458" cy="138" r="2" fill="rgba(255,255,255,0.30)"/>
+</svg>
